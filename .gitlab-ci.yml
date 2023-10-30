@@ -18,3 +18,4 @@ build:
     - docker build -t ${CI_REGISTRY_IMAGE}:${CRYOSPARC_VERSION} -t ${IMAGE_TAG} -t ${CI_REGISTRY_IMAGE}:latest --progress=plain --secret id=CRYOSPARC_LICENSE_ID --build-arg="CRYOSPARC_VERSION=${CRYOSPARC_VERSION}" .
     - docker push $IMAGE_TAG
     - docker push $CI_REGISTRY_IMAGE:latest
+    - docker push ${CI_REGISTRY_IMAGE}:${CRYOSPARC_VERSION}
