@@ -28,3 +28,22 @@ RUN --mount=type=secret,id=CRYOSPARC_LICENSE_ID\
   && sed -i 's/^export CRYOSPARC_LICENSE_ID=.*$/export CRYOSPARC_LICENSE_ID=TBD/g' ${CRYOSPARC_WORKER_DIR}/config.sh 
 
 ENV PATH=/opt/cryosparc/cryosparc_master/bin:/opt/cryosparc/cryosparc_worker/bin:$PATH
+
+# Install Miniconda package manger.
+RUN wget -q -P /tmp https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh \
+    && bash /tmp/Miniconda3-latest-Linux-x86_64.sh -b -p /opt/conda \
+    && rm /tmp/Miniconda3-latest-Linux-x86_64.sh
+
+# Create cryosparc-tools conda environment
+RUN source /opt/conda/etc/profile.d/conda.sh && \
+    conda create -c conda-forge -c anaconda -p /opt/cryosparc-tools -y \
+    pyqt=5 python=3 numpy=1.18.5 libtiff wxPython=4.1.1 adwaita-icon-theme 'setuptools<66'
+RUN source /opt/conda/etc/profile.d/conda.sh && \
+    conda activate /opt/cryosparc-tools && \
+    pip install cryosparc-tools && \
+    pip install nvidia-pyindex && \
+    pip install 'cryolo[c11]' && \
+    conda install -y -c conda-forge --freeze-installed notebook && \
+    conda clean -yaq
+
+ENV PATH=/opt/cryosparc-tools/bin:$PATH
