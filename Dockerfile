@@ -1,6 +1,7 @@
 # Adapted from https://github.com/slaclab/cryosparc-docker/blob/master/Dockerfile
 FROM unlhcc/xfce_ubuntu20_ood:4.14
 
+RUN apt-add-repository -r "deb [arch=amd64] https://packagecloud.io/AtomEditor/atom/any/ any main"
 RUN apt-get update && \
     apt-get -y install iputils-ping
 
