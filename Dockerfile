@@ -54,4 +54,14 @@ RUN source /opt/conda/etc/profile.d/conda.sh && \
     conda install -y -c conda-forge --freeze-installed notebook && \
     conda clean -yaq
 
+# Create topaz environment and add wrapper
+RUN source /opt/conda/etc/profile.d/conda.sh && \
+    conda create -p /opt/topaz -y \
+    python=3.6
+RUN source /opt/conda/etc/profile.d/conda.sh && \
+    conda activate /opt/topaz && \
+    conda install -y -c tbepler -c pytorch topaz=0.2.5 && \
+    conda clean -yaq
+COPY topaz.sh /usr/local/bin
+
 ENV PATH=/opt/cryosparc-tools/bin:$PATH
