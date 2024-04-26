@@ -65,4 +65,14 @@ RUN source /opt/conda/etc/profile.d/conda.sh && \
     conda clean -yaq
 COPY topaz.sh /usr/local/bin
 
+# Create deepemhancer environment and add wrapper
+RUN source /opt/conda/etc/profile.d/conda.sh && \
+    conda create -p /opt/deepEMhancer_env -y \
+    python=3.9
+RUN source /opt/conda/etc/profile.d/conda.sh && \
+    conda activate /opt/deepEMhancer_env && \
+    conda install -y -c hcc -c conda-forge deepemhancer=0.0.2023.08.23 cudatoolkit=11.4 && \
+    conda clean -yaq
+COPY deepemhancer.sh /usr/local/bin
+
 ENV PATH=/opt/cryosparc-tools/bin:$PATH
