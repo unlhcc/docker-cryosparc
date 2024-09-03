@@ -9,8 +9,8 @@ ENV CRYOSPARC_ROOT_DIR /opt/cryosparc
 RUN mkdir -p ${CRYOSPARC_ROOT_DIR}
 WORKDIR ${CRYOSPARC_ROOT_DIR}
 
-ARG CRYOSPARC_VERSION=4.5.1
-# ARG CRYOSPARC_PATCH='v4.4.1+240110'
+ARG CRYOSPARC_VERSION=4.5.3
+ARG CRYOSPARC_PATCH='v4.5.3+240807'
 ENV CRYOSPARC_FORCE_USER=true
 
 # install master
@@ -22,8 +22,8 @@ RUN --mount=type=secret,id=CRYOSPARC_LICENSE_ID\
   && sed -i 's/^export CRYOSPARC_LICENSE_ID=.*$/export CRYOSPARC_LICENSE_ID=TBD/g' ${CRYOSPARC_MASTER_DIR}/config.sh
 
 # patch master
-# RUN cd ${CRYOSPARC_MASTER_DIR} && \
-#     curl -sSL https://get.cryosparc.com/patch_get/${CRYOSPARC_PATCH}/master | tar -xz --overwrite --strip-components=1 --directory ./
+ RUN cd ${CRYOSPARC_MASTER_DIR} && \
+     curl -sSL https://get.cryosparc.com/patch_get/${CRYOSPARC_PATCH}/master | tar -xz --overwrite --strip-components=1 --directory ./
 
 # install worker
 ENV CRYOSPARC_WORKER_DIR ${CRYOSPARC_ROOT_DIR}/cryosparc_worker
