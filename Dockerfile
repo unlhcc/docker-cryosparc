@@ -22,8 +22,8 @@ RUN --mount=type=secret,id=CRYOSPARC_LICENSE_ID\
   && sed -i 's/^export CRYOSPARC_LICENSE_ID=.*$/export CRYOSPARC_LICENSE_ID=TBD/g' ${CRYOSPARC_MASTER_DIR}/config.sh
 
 # patch master
-# RUN cd ${CRYOSPARC_MASTER_DIR} && \
-#     curl -sSL https://get.cryosparc.com/patch_get/${CRYOSPARC_PATCH}/master | tar -xz --overwrite --strip-components=1 --directory ./
+RUN cd ${CRYOSPARC_MASTER_DIR} && \
+    curl -sSL https://get.cryosparc.com/patch_get/${CRYOSPARC_PATCH}/master | tar -xz --overwrite --strip-components=1 --directory ./
 
 # install worker
 ENV CRYOSPARC_WORKER_DIR ${CRYOSPARC_ROOT_DIR}/cryosparc_worker
