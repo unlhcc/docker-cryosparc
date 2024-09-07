@@ -1,0 +1,35 @@
+--- run_topaz_4.5.3.py	2024-09-06 22:54:10.545281212 +0000
++++ run_topaz.py	2024-09-07 02:17:38.509341274 +0000
+@@ -209,7 +209,9 @@
+         printed_preprocess_command = preprocess_command[:]
+         printed_preprocess_command.extend([f'[{len(abs_mrc_paths)} MICROGRAPH PATHS EXCLUDED FOR LEGIBILITY]'])
+ 
+-        num_distribute = int(params.get('num_distribute'))
++#       num_distribute = int(params.get('num_distribute'))
++#   Hardcode number of processes to 1 to avoid process hanging problems within the multiprocessing module
++        num_distribute = 1
+         rc.log("Starting micrograph preprocessing by running command " + " ".join(printed_preprocess_command) + "\n")
+         if num_distribute < 2:
+             preprocess_command.extend(abs_mrc_paths)
+@@ -622,7 +624,9 @@
+     printed_preprocess_command.extend([f'[{len(abs_mrc_paths)} MICROGRAPH PATHS EXCLUDED FOR LEGIBILITY]'])
+     # preprocess_command.extend(abs_mrc_paths)
+ 
+-    num_distribute = int(params.get('num_distribute'))
++#   num_distribute = int(params.get('num_distribute'))
++#   Hardcode number of processes to 1 to avoid process hanging problems within the multiprocessing module
++    num_distribute = 1
+     rc.log("Starting micrograph preprocessing by running command " + " ".join(printed_preprocess_command) + "\n")
+     if num_distribute < 2:
+         preprocess_command.extend(abs_mrc_paths)
+@@ -1088,7 +1092,9 @@
+         printed_preprocess_command = preprocess_command[:]
+         printed_preprocess_command.extend([f'[{len(abs_to_process_mrc_paths)} MICROGRAPH PATHS EXCLUDED FOR LEGIBILITY]'])
+ 
+-        num_distribute = params.get('num_distribute')
++#       num_distribute = params.get('num_distribute')
++#       Hardcode number of processes to 1 to avoid process hanging problems within the multiprocessing module
++        num_distribute = 1
+         rc.log("Starting micrograph preprocessing by running command " + " ".join(printed_preprocess_command) + "\n")
+         if num_distribute < 2:
+             preprocess_command.extend(abs_to_process_mrc_paths)

@@ -37,6 +37,11 @@ RUN --mount=type=secret,id=CRYOSPARC_LICENSE_ID\
 RUN cd ${CRYOSPARC_WORKER_DIR} && \
     curl -sSL https://get.cryosparc.com/patch_get/${CRYOSPARC_PATCH}/worker | tar -xz --overwrite --strip-components=1 --directory ./
 
+# patch Topaz runner to limit number of processes to 1
+ADD 001-run_topazpy-4.5.3.patch /opt/cryosparc/cryosparc_worker/cryosparc_compute/jobs/topaz
+RUN pushd /opt/cryosparc/cryosparc_worker/cryosparc_compute/jobs/topaz && \
+    patch < 001-run_topazpy-4.5.3.patch
+
 ENV PATH=/opt/cryosparc/cryosparc_master/bin:/opt/cryosparc/cryosparc_worker/bin:$PATH
 
 # Install Miniconda package manger.
