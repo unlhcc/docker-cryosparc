@@ -9,8 +9,8 @@ ENV CRYOSPARC_ROOT_DIR /opt/cryosparc
 RUN mkdir -p ${CRYOSPARC_ROOT_DIR}
 WORKDIR ${CRYOSPARC_ROOT_DIR}
 
-ARG CRYOSPARC_VERSION=4.5.3
-ARG CRYOSPARC_PATCH='v4.5.3+240807'
+ARG CRYOSPARC_VERSION=4.6.0
+#ARG CRYOSPARC_PATCH='v4.5.3+240807'
 ENV CRYOSPARC_FORCE_USER=true
 
 # install master
@@ -21,9 +21,9 @@ RUN --mount=type=secret,id=CRYOSPARC_LICENSE_ID\
   && bash ./install.sh --license "$(cat /run/secrets/CRYOSPARC_LICENSE_ID)" --yes --allowroot \
   && sed -i 's/^export CRYOSPARC_LICENSE_ID=.*$/export CRYOSPARC_LICENSE_ID=TBD/g' ${CRYOSPARC_MASTER_DIR}/config.sh
 
-# patch master
-RUN cd ${CRYOSPARC_MASTER_DIR} && \
-    curl -sSL https://get.cryosparc.com/patch_get/${CRYOSPARC_PATCH}/master | tar -xz --overwrite --strip-components=1 --directory ./
+## patch master
+#RUN cd ${CRYOSPARC_MASTER_DIR} && \
+#    curl -sSL https://get.cryosparc.com/patch_get/${CRYOSPARC_PATCH}/master | tar -xz --overwrite --strip-components=1 --directory ./
 
 # install worker
 ENV CRYOSPARC_WORKER_DIR ${CRYOSPARC_ROOT_DIR}/cryosparc_worker
@@ -33,9 +33,9 @@ RUN --mount=type=secret,id=CRYOSPARC_LICENSE_ID\
   && bash ./install.sh --license "$(cat /run/secrets/CRYOSPARC_LICENSE_ID)" --yes --standalone \
   && sed -i 's/^export CRYOSPARC_LICENSE_ID=.*$/export CRYOSPARC_LICENSE_ID=TBD/g' ${CRYOSPARC_WORKER_DIR}/config.sh 
 
-# patch worker
-RUN cd ${CRYOSPARC_WORKER_DIR} && \
-    curl -sSL https://get.cryosparc.com/patch_get/${CRYOSPARC_PATCH}/worker | tar -xz --overwrite --strip-components=1 --directory ./
+## patch worker
+#RUN cd ${CRYOSPARC_WORKER_DIR} && \
+#    curl -sSL https://get.cryosparc.com/patch_get/${CRYOSPARC_PATCH}/worker | tar -xz --overwrite --strip-components=1 --directory ./
 
 # patch Topaz runner to limit number of processes to 1
 ADD 001-run_topazpy-4.5.3.patch /opt/cryosparc/cryosparc_worker/cryosparc_compute/jobs/topaz
