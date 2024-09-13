@@ -38,9 +38,9 @@ RUN --mount=type=secret,id=CRYOSPARC_LICENSE_ID\
 #    curl -sSL https://get.cryosparc.com/patch_get/${CRYOSPARC_PATCH}/worker | tar -xz --overwrite --strip-components=1 --directory ./
 
 # patch Topaz runner to limit number of processes to 1
-ADD 001-run_topazpy-4.5.3.patch /opt/cryosparc/cryosparc_worker/cryosparc_compute/jobs/topaz
+ADD 001-run_topazpy-4.6.0.patch /opt/cryosparc/cryosparc_worker/cryosparc_compute/jobs/topaz
 RUN pushd /opt/cryosparc/cryosparc_worker/cryosparc_compute/jobs/topaz && \
-    patch < 001-run_topazpy-4.5.3.patch
+    patch < 001-run_topazpy-4.6.0.patch
 
 ENV PATH=/opt/cryosparc/cryosparc_master/bin:/opt/cryosparc/cryosparc_worker/bin:$PATH
 
